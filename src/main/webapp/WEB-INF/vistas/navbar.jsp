@@ -32,11 +32,11 @@
                           
                  <div class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
-        Profesor
+        Parvulario
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: white;">
-        <li><a class="dropdown-item" href="CrearProfesor" style="color: black;">Crear Profesor</a></li>
-        <li><a class="dropdown-item" href="ListarProfesor" style="color: black;">Listar Profesores</a></li>
+        <li><a class="dropdown-item" href="CrearProfesor" style="color: black;">Crear Parvulario</a></li>
+        <li><a class="dropdown-item" href="ListarProfesor" style="color: black;">Listar Parvulario</a></li>
     </ul>
 </div>
 

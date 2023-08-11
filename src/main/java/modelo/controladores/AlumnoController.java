@@ -34,7 +34,7 @@ public class AlumnoController {
         return new ModelAndView("crearAlumno");
     }
     
-    @RequestMapping(path = "/ListarAlumnos", method = RequestMethod.GET)
+    @RequestMapping(path = "/listarAlumnos", method = RequestMethod.GET)
     public ModelAndView mostrarListarAlumnos() {
     	List<Alumno> alumnos = al.getAlumnos();
         return new ModelAndView("listarAlumnos", "alumnos", alumnos);

@@ -12,7 +12,17 @@
 	rel="stylesheet"
 	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
 	crossorigin="anonymous">
-
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+    .footer-container {
+        margin-top: auto;
+    }
+</style>
 <title>Footer</title>
 </head>
 
@@ -43,7 +53,7 @@
         @Copyright 2023. Desarrollado por Cinthya Caldera
     </p>
 </footer>
-
+</div>
 	
 
 	<script

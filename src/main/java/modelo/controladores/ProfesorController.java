@@ -60,7 +60,17 @@ public class ProfesorController {
 	    }
 	}
 	
-
+	  @RequestMapping(path = "/FiltrarPorRut", method = RequestMethod.GET)
+	    public ModelAndView filtrarPorRut(@RequestParam("rut") String rut) {
+	        try {
+	            List<Profesor> profesoresFiltrados = pr.filtrarPorRut(rut);
+	            return new ModelAndView("listarProfesor", "profesor", profesoresFiltrados);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            // Manejar el error adecuadamente, redirigir a una página de error o mostrar un mensaje de error en la vista.
+	            return new ModelAndView("error");
+	        }
+	    }
 
 
 

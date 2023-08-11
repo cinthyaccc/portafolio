@@ -25,4 +25,7 @@ public class ProfesorService {
 	public void crearProfesor(Profesor pr) {
 		proRepo.save(pr);
 	}
+	  public List<Profesor> filtrarPorRut(String rut) {
+	        return proRepo.findByRut(rut); // Reemplaza "prRepository" con tu repositorio de profesores
+	    }
 }

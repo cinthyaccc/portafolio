@@ -21,6 +21,7 @@ private String apellido;
 private String rut;
 private String direccion;
 private String telefono;
+private String gradoAcademico;
 private String fechaNacimiento;
 
 @ManyToOne
@@ -32,7 +33,7 @@ private Nivel nivel;
 public Profesor() {
    }
 
-public Profesor(String nombre, String apellido, String rut, String fechaNacimiento, String direccion, String telefono, Nivel nivel) {
+public Profesor(String nombre, String apellido, String rut, String fechaNacimiento, String direccion, String telefono, String gradoAcademico, Nivel nivel) {
 	super();
 	this.nombre = nombre;
 	this.apellido = apellido;
@@ -40,12 +41,21 @@ public Profesor(String nombre, String apellido, String rut, String fechaNacimien
 	this.fechaNacimiento = fechaNacimiento;
 	this.direccion = direccion;
 	this.telefono = telefono;
+	this.gradoAcademico = gradoAcademico;
 	this.nivel = nivel;
 }
 // Getters y setters para el atributo "idNivel"
 
 public String getFechaNacimiento() {
 	return fechaNacimiento;
+}
+
+public String getGradoAcademico() {
+	return gradoAcademico;
+}
+
+public void setGradoAcademico(String gradoAcademico) {
+	this.gradoAcademico = gradoAcademico;
 }
 
 public void setFechaNacimiento(String fechaNacimiento) {

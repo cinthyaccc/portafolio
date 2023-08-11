@@ -1,61 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-
-<title>Nuevo Registro</title>
-<link rel="stylesheet" type="text/css" href="/Portafolio/res/css/estilos.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-	crossorigin="anonymous">
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	
+    <meta charset="UTF-8">
+    <title>Nuevo Registro</title>
+    <link rel="stylesheet" type="text/css" href="/Portafolio/res/css/estilos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
-<%@ include file='navbar.jsp'%>
+    <%@ include file='navbar.jsp'%>
+    <div class="lista-container" style="margin-bottom: 50px;">
+        <div class="container main content">
+            <h1 style="text-align: center; margin-top: 30px; margin-bottom: 30px;">Listado de Parvularios</h1>
+            <div class="filtrar text-center" style="margin-top: 30px; margin-bottom: 20px;">
+                <form method="get" action="/Portafolio/FiltrarPorRut" class="d-flex justify-content-center">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-dark rounded-0" placeholder="Ingrese RUT" name="rut" style="max-width: 300px; margin-bottom: 0;" onkeyup="buscarRut()">
+                        <div class="input-group-append" style="margin-left: 10px; margin-bottom: 0;">
+                            <button class="btn btn-primary btn-sm rounded" type="submit"><strong>Filtrar</strong></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-container">
+                <table class="table table-bordered table-striped" style="margin-bottom: 100px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Rut</th>
+                            <th>Fecha Nac.</th>
+                            <th>Direccion</th>
+                            <th>Telefono</th>
+                            <th>Nivel</th>
+                            <th>Sección</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultados">
+                        <!-- Aquí se agregarán los resultados de la búsqueda -->
+                        <c:forEach var="profesor" items="${profesor}">
+                            <tr>
+                                <td>${profesor.nombre}</td>
+                                <td>${profesor.apellido}</td>
+                                <td>${profesor.rut}</td>
+                                <td>${profesor.fechaNacimiento}</td>
+                                <td>${profesor.direccion}</td>
+                                <td>${profesor.telefono}</td>
+                                <td>${profesor.nivel}</td>
+                                <td>${profesor.nivel.getSeccion()}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="footer-container">
+            <%@ include file='footer.jsp'%>
+        </div>
+    </div>
 
-<div class="container">
-		<h1>Listado de Profesores</h1>
-		<table class="table">
-			<thead class="thead-dark">
-				<tr>
-					<th>Nombre</th>
-					<th>Apellidos</th>
-					<th>Rut</th>
-					<th>Fecha Nac.</th>
-					<th>Direccion</th>
-					<th>Telefono</th>
-					<th>Nivel</th>
-					<th>SecciÃ³n</th>
-					
-				</tr>
-			</thead>
-			<tbody>
-				<%-- Iterar a travÃ©s de la lista de Alumnos enviada desde el controlador --%>
-				<c:forEach var="profesor" items="${profesor}">
-					<tr>
-						<td>${profesor.nombre}</td>
-						<td>${profesor.apellido}</td>
-						<td>${profesor.rut}</td>
-						<td>${profesor.fechaNacimiento}</td>
-						<td>${profesor.direccion}</td>
-						<td>${profesor.telefono}</td>
-						<td>${profesor.nivel}</td>
-						<td>${profesor.nivel.getSeccion()}</td>
-						
-				
+    <script>
+        function buscarRut() {
+            var input = document.querySelector('input[name="rut"]');
+            var resultadosDiv = document.getElementById('resultados');
+            var valorRut = input.value;
 
+            if (valorRut.trim() === '') {
+                resultadosDiv.innerHTML = ''; // Limpiar resultados si el campo está vacío
+                return;
+            }
 
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	<%@ include file='footer.jsp'%>
+            var filas = resultadosDiv.getElementsByTagName('tr');
+            for (var i = 0; i < filas.length; i++) {
+                var rutCelula = filas[i].getElementsByTagName('td')[2]; // 3era celda (índice 2) es el RUT
+                if (rutCelula && rutCelula.textContent.includes(valorRut)) {
+                    filas[i].style.display = ''; // Mostrar fila si el RUT coincide
+                } else {
+                    filas[i].style.display = 'none'; // Ocultar fila si el RUT no coincide
+                }
+            }
+        }
+    </script>
 </body>
-
 </html>

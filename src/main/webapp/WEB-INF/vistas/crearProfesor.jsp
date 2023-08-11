@@ -7,39 +7,15 @@
 <link rel="stylesheet" type="text/css" href="/Portafolio/res/css/estilos.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
-    .formulario-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-   margin-bottom: 30px; /* Agrega un margen inferior */
-    }
-  .formularioP {
-    border: 2px solid #333;
-    padding: 20px;
-    text-align: center;
-   margin-bottom: 30px; /* Agrega un margen inferior */
-    transform: translateY(+20%);
-    background-color: #f2f2f2;
-}
-  
-     .centrar-botones {
-        display: flex;
-        justify-content: center;
-    }
-</style>
+
+   
 </head>
 <body>
 <%@ include file='navbar.jsp'%>
-
-<div class="formularioP container">
+<div class="container main-content" style="margin-bottom: 150px; margin-top: 60px;">
+<div class="formularioP container  mx-auto" style="border: 2px solid black; padding: 20px; max-width: 850px; margin: 0 auto; background-color: #edf6ed">
     <form action="/Portafolio/CrearProfesor" method="post" onsubmit="return enviarFormulario(event)">
-        <h1 class="tituloContacto text-center">Registro de Profesor</h1>
+        <h1 class="tituloContacto text-center" style="margin-bottom: 50px;">Registro del Parvulario</h1>
         
         <div class="row mb-3">
             <div class="col-md-4">
@@ -76,7 +52,8 @@
                 <label for="fechaNacimiento" class="form-label" style="font-weight: bold;">Ingrese Fecha de Nacimiento:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control border border-dark text-end" title="Por favor, introduzca un formato valido DD/MM/AAA).">
+               <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control border border-dark text-end" onchange="convertirFechaToString()" title="Por favor, introduzca un formato valido DD/MM/AAA).">
+               
                 <span id="fechaValidationMessage" style="color: red;"></span>
             </div>
         </div>
@@ -97,9 +74,20 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="telefono" name="telefono" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor Númerico.">
-                <span id="cantidadAsistentesValidationMessage" style="color: red;"></span>
+                <span id="telefonoValidationMessage" style="color: red;"></span>
             </div>
         </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="gradoAcademico" class="form-label" style="font-weight: bold;">Ingrese Nivel de Estudio:</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" id="gradoAcademico" name="gradoAcademico" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor Númerico.">
+                <span id="gradoAcademicoValidationMessage" style="color: red;"></span>
+            </div>
+        </div>
+        
         
         <div class="row mb-3">
             <div class="col-md-4">
@@ -110,15 +98,36 @@
                 <span id="idValidationMessage" style="color: red;"></span>
             </div>
         </div>
-          <div class="centrar-botones"> 
+          
+          <div class="row justify-content-center">
+  
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <input type="submit" value="Enviar" class="btn btn-primary">
+            <div class="col-md-8 text-center">
+                <input type="submit" value="Enviar" class="btn btn-primary btn-lg">
             </div>
         </div>
         </div>
     </form>
 </div>
-
+</div>
+<div class="footer-container">
+<%@ include file='footer.jsp'%>
+</div>
+<script>
+        function convertirFechaToString() {
+            // Obtener el valor del campo de entrada de fecha
+            var fechaInput = document.getElementById("fecha");
+            var fechaSeleccionada = fechaInput.value;
+            
+            // Convertir la fecha en formato YYYY-MM-DD a una cadena más legible
+            var partesFecha = fechaSeleccionada.split("-");
+            var fechaString = partesFecha[2] + "/" + partesFecha[1] + "/" + partesFecha[0];
+            
+            // Mostrar la fecha en formato de cadena
+            var fechaStringElement = document.getElementById("fechaString");
+            fechaStringElement.textContent = "Fecha seleccionada: " + fechaString;
+        }
+    </script>
 </body>
+
 </html>

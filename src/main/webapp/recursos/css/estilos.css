@@ -102,6 +102,15 @@ textarea {
 	height: 30px;
 	/* Alto personalizado */
 }
+input[type="date"],
+textarea {
+
+	border: 2px solid rgb(255, 255, 255);
+	width: 500px;
+	/* Ancho personalizado */
+	height: 30px;
+	/* Alto personalizado */
+}
 
 .caja {
 
@@ -201,15 +210,24 @@ textarea {
     }
     
    
-
+.table-container {
+        max-height: 250px; /* Altura máxima de la lista */
+        overflow-y: auto; /* Agregar barra de desplazamiento vertical cuando sea necesario */
+        border: 1px solid #ccc; /* Agregar un borde al contenedor */
+        padding: 10px; /* Espaciado interno */
+        margin-bottom: 20px; /* Agrega margen inferior para separación */
+     
+    }
     
    .footer-container {
     width: 100%;
+    margin-top: 50px;
     background-color: black;
-    padding: 20px;
+
     color: white;
     text-align: center;
     position: absolute;
     bottom: 0;
     left: 0;
 }
+
