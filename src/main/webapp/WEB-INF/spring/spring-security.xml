@@ -12,8 +12,11 @@
         <intercept-url pattern="/CrearProfesor" access="hasAnyAuthority('ROLE_administrador')"/>
         <intercept-url pattern="/CrearAlumno" access="hasAnyAuthority('ROLE_administrador')"/>
         <intercept-url pattern="/CrearNivel" access="hasAnyAuthority('ROLE_administrador')"/>
+           <intercept-url pattern="/ListarAlumnos" access="hasAnyAuthority('ROLE_administrador')"/>
+              <intercept-url pattern="/ListarProfesor" access="hasAnyAuthority('ROLE_administrador')"/>
+                 <intercept-url pattern="/ListarNivel" access="hasAnyAuthority('ROLE_administrador')"/>
         <intercept-url pattern="/CrearInformacion" access="hasAnyAuthority('ROLE_profesor')"/>
-        <intercept-url pattern="/ListarAlumnos" access="hasAnyAuthority('ROLE_administrador')"/>
+         <intercept-url pattern="/ListarAlumnos" access="hasAnyAuthority('ROLE_profesor')"/>
         <intercept-url pattern="/ListarInformacion" access="hasAnyAuthority('ROLE_apoderado')"/>
         <intercept-url pattern="/logout" access="permitAll" /> <!-- Permitir acceso a todos -->
         <intercept-url pattern="/" access="permitAll"/>

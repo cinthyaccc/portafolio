@@ -13,7 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+
 @Entity
+
 @Table(name = "nivel")
 public class Nivel {
 @Id

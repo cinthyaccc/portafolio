@@ -34,7 +34,7 @@ public class AlumnoController {
         return new ModelAndView("crearAlumno");
     }
     
-    @RequestMapping(path = "/listarAlumnos", method = RequestMethod.GET)
+    @RequestMapping(path = "/ListarAlumnos", method = RequestMethod.GET)
     public ModelAndView mostrarListarAlumnos() {
     	List<Alumno> alumnos = al.getAlumnos();
         return new ModelAndView("listarAlumnos", "alumnos", alumnos);
@@ -68,4 +68,17 @@ public class AlumnoController {
             return new ModelAndView("error");
         }
     }
+    
+    @RequestMapping(path = "/FiltrarPorRutAlumno", method = RequestMethod.GET)
+    public ModelAndView filtrarPorRutAlumno(@RequestParam("rut") String rut) {
+        try {
+            List<Alumno> alumnosFiltrados = al.filtrarPorRutAlumno(rut);
+            return new ModelAndView("listarAlumnos", "alumnos", alumnosFiltrados);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejar el error adecuadamente, redirigir a una página de error o mostrar un mensaje de error en la vista.
+            return new ModelAndView("error");
+        }
+    }
+    
 }

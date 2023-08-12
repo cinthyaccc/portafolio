@@ -52,7 +52,7 @@
                 <label for="fechaNacimiento" class="form-label" style="font-weight: bold;">Ingrese Fecha de Nacimiento:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="fechaNacimiento" name="fechaNacimiento" class="form-control border border-dark text-end" title="Por favor, introduzca un formato valido DD/MM/AAA).">
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control border border-dark text-end" onchange="convertirFechaToString()" title="Por favor, introduzca un formato valido DD/MM/AAA).">
                 <span id="fechaValidationMessage" style="color: red;"></span>
             </div>
         </div>
@@ -131,6 +131,21 @@
 <div class="footer-container">
 <%@ include file='footer.jsp'%>
 </div>
+<script>
+        function convertirFechaToString() {
+            // Obtener el valor del campo de entrada de fecha
+            var fechaInput = document.getElementById("fecha");
+            var fechaSeleccionada = fechaInput.value;
+            
+            // Convertir la fecha en formato YYYY-MM-DD a una cadena más legible
+            var partesFecha = fechaSeleccionada.split("-");
+            var fechaString = partesFecha[2] + "/" + partesFecha[1] + "/" + partesFecha[0];
+            
+            // Mostrar la fecha en formato de cadena
+            var fechaStringElement = document.getElementById("fechaString");
+            fechaStringElement.textContent = "Fecha seleccionada: " + fechaString;
+        }
+    </script>
 </body>
 </html>
 
