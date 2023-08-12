@@ -12,11 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 
 @Entity
 
 @Table(name = "nivel")
+@JsonIgnoreProperties
 public class Nivel {
 @Id
 @Column(name = "idNivel")
@@ -38,7 +42,7 @@ public Nivel(String nombreNivel, String seccion) {
 	this.nombreNivel = nombreNivel;
 	this.seccion = seccion;
 }
-
+@JsonIgnore
 public List<Profesor> getProfesores() {
 	return profesores;
 }
