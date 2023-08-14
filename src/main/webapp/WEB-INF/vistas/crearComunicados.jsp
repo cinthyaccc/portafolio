@@ -16,8 +16,7 @@
     <h1 class="tituloComunicado" style="text-align: center; margin-bottom: 30px;"><strong>Enviar Comunicado</strong></h1>
     <div class="formularioP border border-dark border-2"
          style="display: flex; justify-content: center; background-color: #c1e1c5; margin-top: 30px; padding: 20px; width: 80%; margin: 0 auto;">
-        <form action="/Portafolio/crearComunicados" method="post" onsubmit="return enviarFormulario(event)">
-
+        <form action="/Portafolio/crearComunicados" method="post">
 
             <div class="form-group" style="margin-top: 40px;">
                 <label for="idProfesor" class="form-label" style="font-weight: bold;">Selecciona un Parvulario:</label>
@@ -26,6 +25,16 @@
                         <option value="${profesor.idProfesor}">${profesor.nombre} ${profesor.apellido}</option>
                     </c:forEach>
                 </select>
+                <h6><strong>Listado de Alumnos:</strong></h6>
+                 <div>
+        		<input type="checkbox" id="selectAllCheckbox" onchange="selectAllAlumnos(this)">
+        		<label for="selectAllCheckbox">Seleccionar Todos</label>
+    			</div>
+    			
+                <div id="listaAlumnosSeleccionadosDiv" style = "border: 2px solid black; padding: 15px;">
+                <!-- Inputs ocultos para almacenar los IDs de los alumnos seleccionados -->
+                <input type="hidden" id="alumnosSeleccionados" name="alumnosSeleccionados" value="">
+                </div>
             </div>
 
             <br>
@@ -52,11 +61,12 @@
             </div>
         </form>
     </div>
-    <div id="listaEstudiantesDiv">
-        <!-- Aquí se cargará la lista de estudiantes con checkboxes -->
+    <div id="listaEstudiantesSeleccionadosDiv">
+        <!-- Aquí se cargará la lista de estudiantes seleccionados con checkboxes -->
     </div>
     <%@ include file='footer.jsp'%>
 </div>
+
 <script>
     function cargarAlumnos() {
         var idProfesor = document.getElementById("idProfesor").value;
@@ -72,8 +82,15 @@
         xhr.send();
     }
 
+    function selectAllAlumnos(selectAll) {
+        var checkboxes = document.getElementsByName("alumnosSeleccionados");
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = selectAll;
+        });
+    }
+
     function actualizarListaAlumnos(alumnos) {
-        var listaEstudiantesDiv = document.getElementById("listaEstudiantesDiv");
+        var listaEstudiantesDiv = document.getElementById("listaAlumnosSeleccionadosDiv");
         listaEstudiantesDiv.innerHTML = "";
 
         alumnos.forEach(function (alumno) {
@@ -92,6 +109,34 @@
             listaEstudiantesDiv.appendChild(br);
         });
     }
+
+    
+    
+    
+    function enviarFormulario(event) {
+        event.preventDefault();
+
+        var checkboxes = document.getElementsByName("alumnosSeleccionados");
+        var selectedAlumnos = [];
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedAlumnos.push(checkbox.value);
+            }
+        });
+
+        document.getElementById("alumnosSeleccionados").value = selectedAlumnos.join(",");
+        
+        // Elimina esta línea si no deseas que el formulario se envíe automáticamente
+        // document.querySelector("form").submit();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.querySelector("form");
+        form.addEventListener("submit", enviarFormulario);
+    });
+
+   
 </script>
+
 </body>
 </html>

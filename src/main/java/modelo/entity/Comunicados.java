@@ -9,97 +9,95 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+import javax.persistence.Table;
 @Entity
 @Table(name = "comunicados")
 public class Comunicados {
-	 @Id
-	    @Column(name = "idAlumno")
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private int id;
-	 	private String fecha;
-	    private String titulo;
-	    private String detalle;
-	    
-	    @OneToMany(mappedBy = "comunicado")
-	    private List<AlumnoComunicadoEntity> alumnoComunicados = new ArrayList<>();
-	    @ManyToOne
-	    @JoinColumn(name = "idProfesor")
-	    private Profesor profesor;
-	 
-	public Comunicados() {
-		
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idComunicado")
+    private int idComunicado;
 
+    private String fecha;
+    private String titulo;
+    private String detalle;
 
-	public Comunicados(String fecha, String titulo, String detalle) {
-		super();
-		this.fecha = fecha;
-		this.titulo = titulo;
-		this.detalle = detalle;
-	}
+    @ManyToOne
+    @JoinColumn(name = "idProfesor")
+    private Profesor profesor;
+    
+    
+    @ManyToMany
+    @JoinTable(
+        name = "alumnocomunicado",
+        joinColumns = @JoinColumn(name = "idComunicado"),
+        inverseJoinColumns = @JoinColumn(name = "idAlumno")
+    )
+    private List<Alumno> alumnos = new ArrayList<>();
 
+    // Constructor, getters, setters, etc.
 
-	public List<AlumnoComunicadoEntity> getAlumnoComunicados() {
-		return alumnoComunicados;
-	}
+    public Comunicados() {
+        
+    }
 
+    public Comunicados(String fecha, String titulo, String detalle) {
+        this.fecha = fecha;
+        this.titulo = titulo;
+        this.detalle = detalle;
+    }
 
-	public void setAlumnoComunicados(List<AlumnoComunicadoEntity> alumnoComunicados) {
-		this.alumnoComunicados = alumnoComunicados;
-	}
+    public int getIdComunicado() {
+        return idComunicado;
+    }
 
+    public void setIdComunicado(int idComunicado) {
+        this.idComunicado = idComunicado;
+    }
 
-	public Profesor getProfesor() {
-		return profesor;
-	}
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
 
-
-	public void setProfesor(Profesor profesor) {
-		this.profesor = profesor;
-	}
-
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
 
 	public String getFecha() {
 		return fecha;
 	}
 
-
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
 	public String getDetalle() {
 		return detalle;
 	}
 
-
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	
+
+	public Profesor getProfesor() {
+		return profesor;
+	}
+
+	public void setProfesor(Profesor profesor) {
+		this.profesor = profesor;
+	}
+
+    
 }

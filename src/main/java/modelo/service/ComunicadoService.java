@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import modelo.entity.Alumno;
+import modelo.entity.AlumnoComunicado;
 import modelo.entity.Comunicados;
 import modelo.entity.Profesor;
+import modelo.repository.IAlumnoRepository;
 import modelo.repository.IComunicadosRepository;
 import modelo.repository.IProfesorRepository;
 
@@ -17,6 +19,8 @@ public class ComunicadoService {
 	private IComunicadosRepository coRepo;
 	@Autowired
 	private IProfesorRepository prRepo;
+	@Autowired
+	private IAlumnoRepository alRepo;
 
 		public ComunicadoService() {
 			super();
@@ -34,6 +38,14 @@ public class ComunicadoService {
 		    return prRepo.findById(profesorId);
 		}
 
+		 public Alumno getAlumnoPorId(int idAlumno) {
+		        return alRepo.findById(idAlumno);
+		               
+		    }
+		
+		 public void guardarComunicado(Comunicados comunicado) {
+		        coRepo.save(comunicado);
+		    }
 	}
 
 

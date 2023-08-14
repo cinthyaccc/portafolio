@@ -1,7 +1,9 @@
 package modelo.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,12 +38,13 @@ public class Alumno {
     private String email;
 
     // Cambia el tipo del atributo a Nivel y especifica el nombre de la columna
-    @OneToOne
+   
+    @ManyToOne
     @JoinColumn(name = "idNivel")
     private Nivel idNivel;
-
-    @OneToMany(mappedBy = "alumno")
-    private List<AlumnoComunicadoEntity> alumnoComunicados = new ArrayList<>();
+ 
+    @ManyToMany(mappedBy = "alumnos")
+    private Set<Comunicados> comunicados = new HashSet<>();
 
    
     //Contructor Vacio

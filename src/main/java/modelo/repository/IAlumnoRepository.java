@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import modelo.entity.Alumno;
-import modelo.entity.Profesor;
+
 
 
 public interface IAlumnoRepository extends JpaRepository<Alumno, Integer> {

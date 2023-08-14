@@ -1,5 +1,7 @@
 package modelo.controladores;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import modelo.entity.Alumno;
 import modelo.entity.Comunicados;
 import modelo.entity.Profesor;
-
+import modelo.service.AlumnoComunicadoService;
 import modelo.service.AlumnoService;
 import modelo.service.ComunicadoService;
 import modelo.service.ProfesorService;
@@ -30,7 +33,9 @@ public class ComunicadosController {
 	@Autowired
     private ProfesorService profesorService;
 	 @Autowired
-	    private AlumnoService alumnoService; // Ajusta según tus servicios
+	    private AlumnoService alumnoService;
+	 @Autowired
+	 	private AlumnoComunicadoService acs;
 
     /**
      * Maneja las solicitudes que se le hacen a la raíz del sitio
@@ -55,25 +60,6 @@ public class ComunicadosController {
     }  
   
 
-    
-    @RequestMapping(path = "/crearComunicados", method = RequestMethod.POST)
-    public ModelAndView crearComuninicado(
-        @RequestParam("idProfesor") int idProfesor,
-        Comunicados comunicado
-    ) {
-        try {
-            // Setea el ID del profesor en el comunicado
-            Profesor profesor = co. getProfesorPorId(idProfesor);
-            comunicado.setProfesor(profesor);
-            
-            co.crearComunicados(comunicado);
-            
-            return new ModelAndView("redirect:/ListarComunicados");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ModelAndView("error");
-        }
-    }
    
     @GetMapping("/obtenerAlumnosPorProfesor")
     @ResponseBody
@@ -87,9 +73,46 @@ public class ComunicadosController {
 
         return alumnos;
     }
+    
+    
+       
+    @RequestMapping(path = "/crearComunicados", method = RequestMethod.POST)
+    public ModelAndView crearComuninicado(
+        @RequestParam("idProfesor") int idProfesor,
+        @RequestParam("alumnosSeleccionados") String alumnosSeleccionados,
+        Comunicados comunicado
+    ) {
+        try {
+            // Setea el ID del profesor en el comunicado
+            Profesor profesor = co.getProfesorPorId(idProfesor);
+            comunicado.setProfesor(profesor);
+            
+            co.crearComunicados(comunicado);
+            
+            // Divide la lista de IDs de alumnos seleccionados
+            String[] idsAlumnosStr = alumnosSeleccionados.split(",");
+            List<Alumno> alumnosSeleccionadosList = new ArrayList<>();
 
+            for (String idAlumnoStr : idsAlumnosStr) {
+            	 int idAlumno = Integer.parseInt(idAlumnoStr);
+                Alumno alumno = alumnoService.obtenerAlumnoPorId(idAlumno);
+                alumnosSeleccionadosList.add(alumno);
+           
+            }
+                
+            comunicado.setAlumnos(alumnosSeleccionadosList);
 
-
-
-
+            // Guarda el comunicado con los alumnos asociados
+            co.guardarComunicado(comunicado);
+            return new ModelAndView("redirect:/ListarComunicados");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ModelAndView("error");
+        }
+    }
+    
+    
+    
+    
+    
 }
