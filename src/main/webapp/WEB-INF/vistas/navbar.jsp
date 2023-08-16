@@ -18,13 +18,13 @@
     <img src="/Portafolio/res/img/ampalu_logo.jpg" alt="Logo Jardin Infantil Ampalu" style="height: 80px; width: auto;">
 </a>
 
-            <div class="navbar-nav ml-auto" id="navbar-list" style="margin-right: 0; color: black>
-                <!-- Utiliza la clase "nav-item" en cada enlace -->
+            <div class="navbar-nav ml-auto" id="navbar-list" style="margin-right: 0; color: black;">
+           
                 <a class="nav-item nav-link" href="/Portafolio/" style="color: black;  font-size: 20px; font-weight: bold;">Inicio</a>
                 <%-- Verificar si el usuario NO está autenticado --%>
                     <% if (request.getRemoteUser() == null) { %>
                      <a class="nav-item nav-link" href="login" style="color: black; font-size: 20px; font-weight: bold;">Iniciar Sesión</a>
-                     <a class="nav-item nav-link" href="Registrarse" style="color: black; font-size: 20px; font-weight: bold;">Registrarse</a>
+                     <a class="nav-item nav-link" href="registrarse" style="color: black; font-size: 20px; font-weight: bold;">Registrarse</a>
                      
                     <% } %>
                <%-- Verificar si el usuario tiene el rol "administrador" --%>
@@ -69,16 +69,24 @@
                
                 <%-- Verificar si el usuario tiene el rol "profesor" --%>
                     <% if (request.isUserInRole("ROLE_profesor")) { %>
-                	<a class="nav-item nav-link" href="crearComunicados" style="color: black; font-weight: bold; font-size: 20px;">Crear Comunicado</a>
+                 <div class="nav-item dropdown">   
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+      				  Comunicado</a>
+   					 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: white;">
+      				  <li><a class="dropdown-item" href="crearComunicados" style="color: black;">Crear Comunicado</a></li>
+       				 <li><a class="dropdown-item" href="ListarComunicados" style="color: black;">Listar Comunicados</a></li>
+    				</ul>
+                                                                
+     			</div>
                 	<a class="nav-item nav-link" href="ListarAlumnos" style="color: black; font-weight: bold; font-size: 20px;">Listado de Alumnos</a>
                   	<form action="${pageContext.request.contextPath}/logout" method="post">
                             <button type="submit" class="btn btn-link" style="color: black ; text-decoration: none; font-weight: bold; font-size: 20px;">Logout</button>
                     </form>
                    <% } %>
-               <%-- Verificar si el usuario tiene el rol "apoderao" --%>
+               <%-- Verificar si el usuario tiene el rol "apoderado" --%>
                     <% if (request.isUserInRole("ROLE_apoderado")) { %>
-                <a class="nav-item nav-link" href="listarApoderado" style="color: black; font-weight: bold; font-size: 20px;">ListarApoderado</a>
-            		 <a class="nav-item nav-link" href="Pintemos" style="color: black; font-weight: bold; font-size: 20px;">Pintemos</a>
+                	<a class="nav-item nav-link" href="comunicados" style="color: black; font-weight: bold; font-size: 20px;">Comunicados</a>
+            		 <a class="nav-item nav-link" href="pintemos" style="color: black; font-weight: bold; font-size: 20px;">Pintemos</a>
             		 <form action="${pageContext.request.contextPath}/logout" method="post">
                             <button type="submit" class="btn btn-link" style="color: black ; text-decoration: none; font-weight: bold; font-size: 20px;">Logout</button>
                      </form>

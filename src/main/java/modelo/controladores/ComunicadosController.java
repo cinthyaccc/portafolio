@@ -1,15 +1,16 @@
 package modelo.controladores;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
+import org.springframework.ui.Model;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,12 @@ public class ComunicadosController {
      * 
      * @return un objeto {@link ModelAndView} con la respuesta al cliente
      */
-
+	 @GetMapping("/comunicados")
+	 public ModelAndView mostrarComunicados() {
+	     List<Comunicados> comunicados = co.getComunicados();
+	     return new ModelAndView("comunicados", "comunicados", comunicados);
+	 }
+	
     @RequestMapping(path = "/crearComunicados", method = RequestMethod.GET)
     public ModelAndView mostrarCrearComunicado() {
      
@@ -53,7 +59,7 @@ public class ComunicadosController {
     	return modelAndView;
     }
     
-    @RequestMapping(path = "/ListarComunicado", method = RequestMethod.GET)
+    @RequestMapping(path = "/ListarComunicados", method = RequestMethod.GET)
     public ModelAndView mostrarListarComunicados() {
     	List<Comunicados> comunicados = co.getComunicados();
         return new ModelAndView("listarComunicados", "comunicados", comunicados);
@@ -80,7 +86,8 @@ public class ComunicadosController {
     public ModelAndView crearComuninicado(
         @RequestParam("idProfesor") int idProfesor,
         @RequestParam("alumnosSeleccionados") String alumnosSeleccionados,
-        Comunicados comunicado
+        Comunicados comunicado,
+        Model model
     ) {
         try {
             // Setea el ID del profesor en el comunicado
@@ -104,15 +111,43 @@ public class ComunicadosController {
 
             // Guarda el comunicado con los alumnos asociados
             co.guardarComunicado(comunicado);
+            model.addAttribute("comunicadoCreado", true);
             return new ModelAndView("redirect:/ListarComunicados");
         } catch (Exception e) {
             e.printStackTrace();
             return new ModelAndView("error");
         }
+   
+        
+        
+        
     }
     
-    
-    
+ 
+
+    @RequestMapping(path = "/FiltrarPorRutProfesor", method = RequestMethod.GET)
+    public ModelAndView filtrarPorRutProfesor(@RequestParam("rut") String rut) {
+        try {
+            List<Profesor> profesores = profesorService.filtrarPorRutProfesor(rut);
+            
+            if (!profesores.isEmpty()) {
+                Profesor profesor = profesores.get(0); // Obtén el primer profesor de la lista
+                int idProfesor = profesor.getIdProfesor(); // Asegúrate de que la entidad Profesor tenga un método getId()
+                
+                List<Comunicados> comunicadosFiltrados = co.getComunicadosPorIdProfesor(idProfesor);
+
+                return new ModelAndView("listarComunicados", "comunicados", comunicadosFiltrados);
+            } else {
+                // Manejar el caso cuando no se encuentra el profesor
+                return new ModelAndView("error");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ModelAndView("error");
+        }
+    }
+
+
     
     
 }

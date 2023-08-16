@@ -43,6 +43,7 @@ public class AlumnoService {
 		    public Alumno obtenerAlumnoPorId(int idAlumno) {
 		        return alumRepo.findById(idAlumno);
 	}
+		    
 
 }
 

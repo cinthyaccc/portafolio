@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="nombre" name="nombre" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="nombreValidationMessage" style="color: red;"></span>
+                <span id="nombreValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="apellido" name="apellido" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="apellidoValidationMessage" style="color: red;"></span>
+                <span id="apellidoValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="rut" name="rut" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor menor a 99.999.999 /sin puntos">
-                <span id="rutValidationMessage" style="color: red;"></span>
+                <span id="rutValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-8">
                 <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control border border-dark text-end" onchange="convertirFechaToString()" title="Por favor, introduzca un formato valido DD/MM/AAA).">
-                <span id="fechaValidationMessage" style="color: red;"></span>
+                <span id="fechaValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="direccion" name="direccion" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="direccionValidationMessage" style="color: red;"></span>
+                <span id="direccionValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="nombrePadre" name="nombrePadre" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="direccionValidationMessage" style="color: red;"></span>
+                <span id="direccionValidationMessage"  class="error-message"></span>
             </div>
         </div>
        
@@ -83,7 +83,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="nombreMadre" name="nombreMadre" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="direccionValidationMessage" style="color: red;"></span>
+                <span id="direccionValidationMessage"  class="error-message"></span>
             </div>
         </div>
 			
@@ -93,7 +93,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="telefono" name="telefono" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor Númerico.">
-                <span id="cantidadAsistentesValidationMessage" style="color: red;"></span>
+                <span id="cantidadAsistentesValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="idNivel" name="idNivel" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor Númerico." required>
-                <span id="idValidationMessage" style="color: red;"></span>
+                <span id="idValidationMessage"  class="error-message"></span>
             </div>
         </div>
         
@@ -113,7 +113,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="email" name="email" class="form-control border border-dark text-end" title="Campo Obligatorio / Debe Introducir un Valor Númerico." required>
-                <span id="idValidationMessage" style="color: red;"></span>
+                <span id="idValidationMessage"  class="error-message"></span>
             </div>
         </div>
           
@@ -121,7 +121,7 @@
   
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <input type="submit" value="Enviar" class="btn btn-primary btn-lg">
+                <input type="submit" value="Enviar" class="btn btn-primary btn-lg" disabled>
             </div>
         </div>
         </div>
@@ -145,6 +145,88 @@
             var fechaStringElement = document.getElementById("fechaString");
             fechaStringElement.textContent = "Fecha seleccionada: " + fechaString;
         }
+        
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.querySelector("form");
+            var nombre = document.getElementById("nombre");
+            var apellido = document.getElementById("apellido");
+            var rut = document.getElementById("rut");
+            var fechaNacimiento = document.getElementById("fechaNacimiento");
+            var direccion = document.getElementById("direccion");
+            var nombrePadre = document.getElementById("nombrePadre");
+            var nombreMadre = document.getElementById("nombreMadre");
+            var telefono = document.getElementById("telefono");
+            var idNivel = document.getElementById("idNivel");
+            var email = document.getElementById("email");
+            var botonEnviar = document.querySelector("input[type='submit']");
+
+            function validarCampos() {
+                var isValid = true;
+
+                if (nombre.value.trim() === "") {
+                    document.getElementById("nombreValidationMessage").textContent = "Ingrese un nombre.";
+                    isValid = false;
+                } else {
+                    document.getElementById("nombreValidationMessage").textContent = "";
+                }
+
+                if (apellido.value.trim() === "") {
+                    document.getElementById("apellidoValidationMessage").textContent = "Ingrese un apellido.";
+                    isValid = false;
+                } else {
+                    document.getElementById("apellidoValidationMessage").textContent = "";
+                }
+
+                if (rut.value.trim() === "") {
+                    document.getElementById("rutValidationMessage").textContent = "Ingrese un rut.";
+                    isValid = false;
+                } else {
+                    document.getElementById("rutValidationMessage").textContent = "";
+                }
+
+                if (fechaNacimiento.value.trim() === "") {
+                    document.getElementById("fechaValidationMessage").textContent = "Ingrese una fecha de nacimiento.";
+                    isValid = false;
+                } else {
+                    document.getElementById("fechaValidationMessage").textContent = "";
+                }
+
+                if (direccion.value.trim() === "") {
+                    document.getElementById("direccionValidationMessage").textContent = "Ingrese una dirección.";
+                    isValid = false;
+                } else {
+                    document.getElementById("direccionValidationMessage").textContent = "";
+                }
+
+                if (direccion.value.trim() === "") {
+                    document.getElementById("telefonoValidationMessage").textContent = "Ingrese una Número de Telefono.";
+                    isValid = false;
+                } else {
+                    document.getElementById("telefonoValidationMessage").textContent = "";
+                }
+                // Resto de las validaciones para los campos faltantes...
+
+                if (isValid) {
+                    botonEnviar.removeAttribute("disabled");
+                } else {
+                    botonEnviar.setAttribute("disabled", "disabled");
+                }
+            }
+
+            // Agregar eventos de input a los campos del formulario
+            nombre.addEventListener("input", validarCampos);
+            apellido.addEventListener("input", validarCampos);
+            rut.addEventListener("input", validarCampos);
+            fechaNacimiento.addEventListener("input", validarCampos);
+            direccion.addEventListener("input", validarCampos);
+            nombrePadre.addEventListener("input", validarCampos);
+            nombreMadre.addEventListener("input", validarCampos);
+            telefono.addEventListener("input", validarCampos);
+            idNivel.addEventListener("input", validarCampos);
+            email.addEventListener("input", validarCampos);
+        });
+
     </script>
 </body>
 </html>

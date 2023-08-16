@@ -43,8 +43,11 @@ public class Alumno {
     @JoinColumn(name = "idNivel")
     private Nivel idNivel;
  
+    
     @ManyToMany(mappedBy = "alumnos")
-    private Set<Comunicados> comunicados = new HashSet<>();
+    private List<Comunicados> comunicados = new ArrayList<>();
+
+
 
    
     //Contructor Vacio
@@ -66,7 +69,7 @@ public class Alumno {
         this.email = email;
         this.idNivel = idNivel;
     }
-
+    
     // Getters y setters para el atributo "idNivel"
     public Nivel getIdNivel() {
         return idNivel;

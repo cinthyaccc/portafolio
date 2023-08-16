@@ -43,10 +43,15 @@ public class ComunicadoService {
 		               
 		    }
 		
+		
 		 public void guardarComunicado(Comunicados comunicado) {
 		        coRepo.save(comunicado);
 		    }
-	}
+	
+		 public List<Comunicados> getComunicadosPorIdProfesor(int idProfesor) {
+		        return coRepo.findByProfesorIdProfesor(idProfesor);
+		    }
+}
 
 
 

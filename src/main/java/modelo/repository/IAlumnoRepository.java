@@ -15,6 +15,7 @@ import modelo.entity.Alumno;
 public interface IAlumnoRepository extends JpaRepository<Alumno, Integer> {
 
 	  Alumno findById(int id);
+	   
 	    List<Alumno> findByRut(String rut);
 	    @Query("SELECT DISTINCT a FROM Alumno a JOIN FETCH a.idNivel n LEFT JOIN FETCH n.profesores p WHERE p.id = :idProfesor")
 	    List<Alumno> findAlumnosByProfesorId(@Param("idProfesor") int idProfesor);

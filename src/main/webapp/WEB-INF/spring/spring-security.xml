@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans"
+<bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security" 
              xsi:schemaLocation="http://www.springframework.org/schema/beans
                                  http://www.springframework.org/schema/beans/spring-beans.xsd
                                  http://www.springframework.org/schema/security
                                  http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <bean:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <!-- Configuración de seguridad -->
     <http auto-config="true">
         <intercept-url pattern="/CrearProfesor" access="hasAnyAuthority('ROLE_administrador')"/>
@@ -17,7 +18,8 @@
                  <intercept-url pattern="/ListarNivel" access="hasAnyAuthority('ROLE_administrador')"/>
         <intercept-url pattern="/CrearInformacion" access="hasAnyAuthority('ROLE_profesor')"/>
          <intercept-url pattern="/ListarAlumnos" access="hasAnyAuthority('ROLE_profesor')"/>
-        <intercept-url pattern="/ListarInformacion" access="hasAnyAuthority('ROLE_apoderado')"/>
+          <intercept-url pattern="/ListarComunicados" access="hasAnyAuthority('ROLE_profesor')"/>
+        <intercept-url pattern="/comunicados" access="hasAnyAuthority('ROLE_apoderado')"/>
         <intercept-url pattern="/logout" access="permitAll" /> <!-- Permitir acceso a todos -->
         <intercept-url pattern="/" access="permitAll"/>
         <form-login login-page="/login"
@@ -40,4 +42,4 @@
         </authentication-provider>
     </authentication-manager>
 
-</beans:beans>
+</bean:beans>

@@ -218,6 +218,12 @@ textarea {
         margin-bottom: 20px; /* Agrega margen inferior para separación */
      
     }
+     .error-message {
+        color: red;
+        font-size: 15px;
+        margin-top: 5px;
+        display: block;
+    }
     
    .footer-container {
     width: 100%;

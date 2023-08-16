@@ -40,23 +40,23 @@
             <br>
             <br>
             <label for="fecha" class="form-label" style="font-weight: bold;">Ingrese Fecha:</label><br>
-            <input type="date" id="fecha" name="fecha" class="form-control border border-dark" title="Campo Obligatorio"><br>
-            <br>
-            <span id="nombreValidationMessage" style="color: red;"></span>
+<input type="date" id="fecha" name="fecha" class="form-control border border-dark" title="Campo Obligatorio">
+<span id="fechaValidationMessage" class="error-message"></span><br>
+<br>
 
-            <label for="titulo" class="form-label" style="font-weight: bold;">Ingrese Titulo:</label><br>
-            <input type="text" id="titulo" name="titulo" class="form-control border border-dark" title="Campo Obligatorio"><br>
-            <br>
-            <span id="nombreValidationMessage" style="color: red;"></span>
+<label for="titulo" class="form-label" style="font-weight: bold;">Ingrese Titulo:</label><br>
+<input type="text" id="titulo" name="titulo" class="form-control border border-dark" title="Campo Obligatorio">
+<span id="tituloValidationMessage" class="error-message"></span><br>
+<br>
 
-            <label for="detalle" class="form-label" style="font-weight: bold;">Ingrese Descripción:</label><br>
-            <input type="text" id="detalle" name="detalle" class="form-control border border-dark" title="Campo Obligatorio"><br>
-            <br>
-            <span id="nombreValidationMessage" style="color: red;"></span>
+<label for="detalle" class="form-label" style="font-weight: bold;">Ingrese Descripción:</label><br>
+<input type="text" id="detalle" name="detalle" class="form-control border border-dark" title="Campo Obligatorio">
+<span id="detalleValidationMessage" class="error-message"></span><br>
+<br>
 
             <div class="row justify-content-center">
                 <div class="col-md-8 text-center">
-                    <input type="submit" value="Enviar" class="btn btn-primary btn-lg">
+                        <input type="submit" value="Enviar" class="btn btn-primary btn-lg" disabled>
                 </div>
             </div>
         </form>
@@ -130,12 +130,56 @@
         // document.querySelector("form").submit();
     }
 
+    
+    
     document.addEventListener("DOMContentLoaded", function() {
         var form = document.querySelector("form");
-        form.addEventListener("submit", enviarFormulario);
+        var fecha = document.getElementById("fecha");
+        var titulo = document.getElementById("titulo");
+        var detalle = document.getElementById("detalle");
+        var botonEnviar = document.querySelector("input[type='submit']");
+
+        function validarCampos() {
+            var isValid = true;
+
+            if (fecha.value.trim() === "") {
+                document.getElementById("fechaValidationMessage").textContent = "Ingrese una fecha.";
+                isValid = false;
+            } else {
+                document.getElementById("fechaValidationMessage").textContent = "";
+            }
+
+            if (titulo.value.trim() === "") {
+                document.getElementById("tituloValidationMessage").textContent = "Ingrese un título.";
+                isValid = false;
+            } else {
+                document.getElementById("tituloValidationMessage").textContent = "";
+            }
+
+            if (detalle.value.trim() === "") {
+                document.getElementById("detalleValidationMessage").textContent = "Ingrese una descripción.";
+                isValid = false;
+            } else {
+                document.getElementById("detalleValidationMessage").textContent = "";
+            }
+
+            if (isValid) {
+                botonEnviar.removeAttribute("disabled");
+            } else {
+                botonEnviar.setAttribute("disabled", "disabled");
+            }
+        }
+
+        // Agregar eventos de input a los campos del formulario
+        fecha.addEventListener("input", validarCampos);
+        titulo.addEventListener("input", validarCampos);
+        detalle.addEventListener("input", validarCampos);
+
+        // Cargar alumnos cuando cambie el profesor seleccionado
+        var idProfesorSelect = document.getElementById("idProfesor");
+        idProfesorSelect.addEventListener("change", cargarAlumnos);
     });
 
-   
 </script>
 
 </body>

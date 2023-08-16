@@ -63,7 +63,7 @@ public class ProfesorController {
 	  @RequestMapping(path = "/FiltrarPorRut", method = RequestMethod.GET)
 	    public ModelAndView filtrarPorRut(@RequestParam("rut") String rut) {
 	        try {
-	            List<Profesor> profesoresFiltrados = pr.filtrarPorRut(rut);
+	            List<Profesor> profesoresFiltrados = pr.filtrarPorRutProfesor(rut);
 	            return new ModelAndView("listarProfesor", "profesor", profesoresFiltrados);
 	        } catch (Exception e) {
 	            e.printStackTrace();

@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-8">
                 <input type="text" id="nombreNivel" name="nombreNivel" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="nombreNivelValidationMessage" style="color: red;"></span>
+                <span id="nombreNivelValidationMessage" class="error-message"></span>
             </div>
         </div>
         
@@ -32,8 +32,8 @@
                 <label for="seccion" class="form-label" style="font-weight: bold;">Ingrese Sección:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="apellido" name="secccion" class="form-control border border-dark text-end" title="Campo Obligatorio">
-                <span id="seccionValidationMessage" style="color: red;"></span>
+                <input type="text" id="seccion" name="secccion" class="form-control border border-dark text-end" title="Campo Obligatorio">
+                <span id="seccionValidationMessage" class="error-message"></span>
             </div>
         </div>
         
@@ -43,7 +43,7 @@
   
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <input type="submit" value="Enviar" class="btn btn-primary btn-lg">
+                <input type="submit" value="Enviar" class="btn btn-primary btn-lg"  disabled>
             </div>
         </div>
         </div>
@@ -53,5 +53,44 @@
 <div class="footer-container">
 <%@ include file='footer.jsp'%>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector("form");
+    var nombreNivel = document.getElementById("nombreNivel");
+    var seccion = document.getElementById("seccion");
+    var botonEnviar = document.querySelector("input[type='submit']");
+
+    function validarCampos() {
+        var isValid = true;
+
+        if (nombreNivel.value.trim() === "") {
+            document.getElementById("nombreNivelValidationMessage").textContent = "Ingrese un nombre para el nivel.";
+            isValid = false;
+        } else {
+            document.getElementById("nombreNivelValidationMessage").textContent = "";
+        }
+
+        if (seccion.value.trim() === "") {
+            document.getElementById("seccionValidationMessage").textContent = "Ingrese una sección.";
+            isValid = false;
+        } else {
+            document.getElementById("seccionValidationMessage").textContent = "";
+        }
+
+        if (isValid) {
+            botonEnviar.removeAttribute("disabled");
+        } else {
+            botonEnviar.setAttribute("disabled", "disabled");
+        }
+    }
+
+    // Agregar eventos de input a los campos del formulario
+    nombreNivel.addEventListener("input", validarCampos);
+    seccion.addEventListener("input", validarCampos);
+});
+
+
+</script>
 </body>
 </html>
